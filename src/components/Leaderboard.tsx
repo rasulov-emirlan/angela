@@ -98,6 +98,7 @@ const Leaderboard = ({ people, updateCallback }: LeaderboardProps) => {
                   type="number"
                   min={0}
                   max={10}
+                  placeholder="vote..."
                   className="h-1/2 rounded-t-md border border-b-[0.5px] border-[#30373C] bg-[#010409] pl-2 outline-none hover:border-[#495157]"
                   onChange={(e) =>
                     (person.currentVote = parseInt(e.target.value))
