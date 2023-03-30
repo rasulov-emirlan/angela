@@ -38,7 +38,13 @@ const Form = ({ updateCallback }: FormProps) => {
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
-      <StdBtn text="Create" onClick={() => {}} btnType="submit" />
+      <StdBtn
+        text="Create"
+        onClick={() => {
+          console.log("clicked");
+        }}
+        btnType="submit"
+      />
     </form>
   );
 };

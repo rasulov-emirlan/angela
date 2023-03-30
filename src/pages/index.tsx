@@ -1,6 +1,5 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "angela/utils/api";
@@ -23,7 +22,9 @@ const Home: NextPage = () => {
   }
 
   const updateCallback = () => {
-    data.refetch();
+    data.refetch().catch((err) => {
+      console.error(err);
+    });
   };
 
   return (
