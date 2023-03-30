@@ -5,28 +5,27 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "angela/utils/api";
 import Leaderboard from "angela/components/Leaderboard";
+import Form from "angela/components/Form";
+import Footer from "angela/components/Footer";
 
 const Home: NextPage = () => {
-  const people = [
-    {
-      name: "Angela",
-      score: 5,
-      smashCount: 3,
-      passCount: 1,
-      addedByEmail: "rasulov.emirlan@gmail.com",
-      addedByName: "Emirlan Rasulov",
-      avatar: "https://i.imgur.com/8Km9tLL.png",
-    },
-    {
-      name: "Emirlan",
-      score: 10,
-      smashCount: 2,
-      passCount: 1,
-      addedByEmail: "rasulov.emirlan@gmail.com",
-      addedByName: "Emirlan Rasulov",
-      avatar: "https://i.imgur.com/8Km9tLL.png",
-    },
-  ];
+  const data = api.leaderboard.paginate.useQuery({
+    page: 0,
+    pageSize: 100,
+  });
+
+  if (data.status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (data.status === "error") {
+    return <div>Error: {data.error.message}</div>;
+  }
+
+  const updateCallback = () => {
+    data.refetch();
+  };
+
   return (
     <>
       <Head>
@@ -35,16 +34,24 @@ const Home: NextPage = () => {
           name="description"
           content="Leaderboard for evaluating appearances"
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <div className="h-18 flex w-full bg-[#171A22]">
         <AuthShowcase />
       </div>
 
-      <main className="mx-auto flex min-h-screen max-w-[1280px] flex-col">
-        <Leaderboard people={people} />
-      </main>
+      <div className="mx-auto flex min-h-screen max-w-[1280px] gap-4 px-2">
+        <main className="flex min-h-screen w-2/3 flex-col">
+          <Leaderboard people={data.data} updateCallback={updateCallback} />
+        </main>
+
+        <aside className="my-1 w-1/3">
+          <Form updateCallback={updateCallback} />
+        </aside>
+      </div>
+
+      <Footer />
     </>
   );
 };
