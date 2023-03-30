@@ -38,10 +38,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="mx-auto flex min-h-screen max-w-[1280px] flex-col py-2">
-        <div className="my-8 flex flex-col items-center gap-2">
-          <AuthShowcase />
-        </div>
+      <div className="h-18 flex w-full bg-[#171A22]">
+        <AuthShowcase />
+      </div>
+
+      <main className="mx-auto flex min-h-screen max-w-[1280px] flex-col">
         <Leaderboard people={people} />
       </main>
     </>
@@ -58,13 +59,13 @@ const AuthShowcase: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl text-white">
+    <div className="mx-auto flex w-full max-w-[1280px] items-center justify-between p-2 text-white">
+      <p>
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
         {secretMessage && <span> - {secretMessage}</span>}
       </p>
       <button
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+        className="rounded-md border border-[#30373C] bg-[#21262D] p-2 hover:border-[#495157] hover:bg-[#3f454d]"
         onClick={sessionData ? () => void signOut() : () => void signIn()}
       >
         {sessionData ? "Sign out" : "Sign in"}
